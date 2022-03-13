@@ -1,7 +1,7 @@
 const section = document.querySelector('.game');
 const livesCount = document.querySelector('.liveCount');
 
-const lives = 5;
+let lives = 5;
 
 livesCount.textContent = lives;
 
@@ -42,13 +42,70 @@ const generatorCards = () => {
         front.classList = 'front';
         back.classList = 'back';
 
-        console.log(front.src)
         front.src = element.imgSrc;
+
+        card.setAttribute('name', element.name);
 
         section.appendChild(card);
         card.appendChild(front);
-        card.appendChild(back)
+        card.appendChild(back);
+
+        card.addEventListener('click', (e) => {
+            card.classList.toggle('toggleCard');
+            checkCards(e)
+        });
     });
 };
 
-generatorCards()
+const checkCards = (e) => {
+    const clickedCard = e.target;
+    clickedCard.classList.add('flipped');
+
+    const flippedCards = document.querySelectorAll('.flipped');
+    
+
+    if(flippedCards.length === 2) {
+        if(flippedCards[0].getAttribute('name') === flippedCards[1].getAttribute('name')){
+            flippedCards.forEach(element => {
+                element.classList.remove('flipped');
+                element.style.pointerEvents = 'none';
+            })
+        } else {
+            flippedCards.forEach(element => {
+                element.classList.remove('flipped');
+                setTimeout(() => {
+                    element.classList.remove('toggleCard');
+                }, 1000);
+            });
+            lives--;
+            livesCount.textContent = lives;
+            if(lives === 0) {
+                restart()
+            }
+        };
+    };
+};
+
+const restart = () => {
+    let cardData = randomize();
+
+    let fronts = document.querySelectorAll('.front');
+    let cards = document.querySelectorAll('.card');
+
+    section.style.pointerEvents = 'none'
+
+    cardData.forEach((element, index) => {
+        cards[index].classList.remove('toggleCard');
+        setTimeout(() => {
+            cards[index].style.pointerEvents = 'all';
+            fronts[index].src = element.imgSrc;
+            cards[index].setAttribute('name', element.name);
+            section.style.pointerEvents = 'all'
+        }, 1000);
+    });
+
+    lives = 5;
+    livesCount.textContent = lives;
+};
+
+generatorCards();
