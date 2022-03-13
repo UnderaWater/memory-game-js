@@ -22,4 +22,33 @@ const getData = () => [
     { id: 14, imgSrc: './images/elephant.jpg', name: 'elephant'},
     { id: 15, imgSrc: './images/lion.jpg', name: 'lion'},
     { id: 16, imgSrc: './images/rabbit.jpg', name: 'rabbit'},
-]
+];
+
+const randomize = () => {
+    const data = getData();
+    data.sort(() => Math.random() - 0.5);
+    return data;
+};
+
+const generatorCards = () => {
+    const data = randomize();
+    
+    data.forEach(element => {
+        const card = document.createElement('div');
+        const front = document.createElement('img');
+        const back = document.createElement('div');
+
+        card.classList = 'card';
+        front.classList = 'front';
+        back.classList = 'back';
+
+        console.log(front.src)
+        front.src = element.imgSrc;
+
+        section.appendChild(card);
+        card.appendChild(front);
+        card.appendChild(back)
+    });
+};
+
+generatorCards()
