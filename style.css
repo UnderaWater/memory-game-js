@@ -4,6 +4,7 @@
     box-sizing: border-box;
 }
 
+
 body {
     height: 100vh;
     background: white;
@@ -29,6 +30,7 @@ img {
 }
 
 .game {
+    margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(4, 8rem);
     grid-template-rows: repeat(4, 8rem);
@@ -58,4 +60,19 @@ img {
 
 .toggleCard {
     transform: rotateY(180deg);
+}
+
+.endBlock {
+    display: flex;
+}
+
+.btn {
+    margin-left: 30px;
+    padding: 0 17px;
+    font-size: 20px;
+    border-radius: 21px;
+    background-color: black;
+    color: wheat;
+    border: none;
+    cursor: pointer;
 }

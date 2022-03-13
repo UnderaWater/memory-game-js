@@ -1,7 +1,8 @@
 const section = document.querySelector('.game');
 const livesCount = document.querySelector('.liveCount');
+const title = document.querySelector('.infoLives')
 
-let lives = 5;
+let lives = 8;
 
 livesCount.textContent = lives;
 
@@ -62,6 +63,7 @@ const checkCards = (e) => {
     clickedCard.classList.add('flipped');
 
     const flippedCards = document.querySelectorAll('.flipped');
+    const toggleCards = document.querySelectorAll('.toggleCard')
     
 
     if(flippedCards.length === 2) {
@@ -80,10 +82,13 @@ const checkCards = (e) => {
             lives--;
             livesCount.textContent = lives;
             if(lives === 0) {
-                restart()
+                endGame('You lose, try again')
             }
         };
     };
+    if(toggleCards.length === 16) {
+        endGame('you won')
+    }
 };
 
 const restart = () => {
@@ -100,12 +105,31 @@ const restart = () => {
             cards[index].style.pointerEvents = 'all';
             fronts[index].src = element.imgSrc;
             cards[index].setAttribute('name', element.name);
-            section.style.pointerEvents = 'all'
+            section.style.pointerEvents = 'all';
         }, 1000);
     });
 
     lives = 5;
     livesCount.textContent = lives;
+    document.querySelector('.endBlock').remove()
 };
+
+const endGame = (text) => {
+    const end = document.createElement('div');
+    const btn = document.createElement('button');
+    const infoGame = document.createElement('h2');
+
+    title.appendChild(end);
+    end.appendChild(infoGame);
+    end.appendChild(btn);
+
+    end.classList.add('endBlock');
+    btn.classList.add('btn');
+
+    infoGame.textContent = text;
+    btn.textContent = 'restart';
+
+    btn.addEventListener('click', () => restart());
+}
 
 generatorCards();
